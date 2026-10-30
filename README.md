@@ -1,6 +1,6 @@
 # Digit and Character Recognition System
 
-*Developed by **Aakash Birla** (Information Technology, 3rd Year) under the mentorship of
+*Developed by **Aakash Birla** and **Avadhesh Ransore** (Information Technology, 3rd Year) under the mentorship of
 **Dr. Akhilesh Tiwari**, Department of Information Technology, MITS DU, Gwalior.*
 
 An educational, end-to-end web application that recognises handwritten **digits (0–9)** and
