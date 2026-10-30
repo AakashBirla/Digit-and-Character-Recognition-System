@@ -31,9 +31,8 @@ build/
 data/MNIST/
 data/EMNIST/
 
-# Model checkpoints (large binary files - re-create with train_mnist.py / train_emnist.py)
-models/*.pth
-models/*.pt
+# Model checkpoints: the two trained models in models/ (~1.7 MB each) ARE committed so the app runs
+# right after cloning. Smoke-test / experiment checkpoints should be written elsewhere (--output).
 checkpoints/*.pth
 checkpoints/*.pt
 # Left over by an interrupted atomic checkpoint write

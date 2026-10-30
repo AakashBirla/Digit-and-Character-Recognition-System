@@ -63,11 +63,17 @@ source .venv/bin/activate
 python -m pip install --upgrade pip
 pip install -r requirements.txt        # see "GPU vs CPU" for CUDA wheels
 
-python train_mnist.py --epochs 10      # digits model     -> models/mnist_cnn.pth
-python train_emnist.py --epochs 15     # characters model -> models/emnist_byclass_cnn.pth
-
 python app.py                          # open http://127.0.0.1:5000
 pytest -q                              # run the test suite
+```
+
+**Pre-trained models are included** (`models/mnist_cnn.pth`, `models/emnist_byclass_cnn.pth`,
+~1.7 MB each, with the measured results below), so the app works right after installation.
+To reproduce them, or after changing the code, retrain:
+
+```bash
+python train_mnist.py --epochs 10      # digits model     -> models/mnist_cnn.pth
+python train_emnist.py --epochs 15     # characters model -> models/emnist_byclass_cnn.pth
 ```
 
 The datasets are downloaded automatically into `data/` on first use (MNIST ≈ 11 MB,
@@ -540,7 +546,7 @@ skipped without a GPU.
 ├── frontend/              # index.html, styles.css, script.js
 ├── tests/                 # pytest suite
 ├── data/                  # datasets (downloaded, git-ignored) + README with attribution
-├── models/                # trained checkpoints (*.pth, git-ignored)
+├── models/                # trained checkpoints (*.pth, included in the repository)
 └── results/               # metrics, plots, dataset inspection
 ```
 
