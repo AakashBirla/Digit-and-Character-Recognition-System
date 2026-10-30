@@ -894,7 +894,6 @@
     renderModelChip();
     renderNotice();
     renderModelInfo();
-    renderFooter();
     updatePredictButton();
   }
 
@@ -1088,22 +1087,6 @@
     } else {
       dd.appendChild(h('span', 'muted', '—'));
     }
-  }
-
-  function renderFooter() {
-    const health = state.health;
-    if (state.backend === 'offline') {
-      els.footerRuntime.textContent = 'Backend: offline';
-      return;
-    }
-    if (!health) {
-      els.footerRuntime.textContent = 'Backend: checking…';
-      return;
-    }
-    const parts = [];
-    if (health.torch_version) parts.push('PyTorch ' + health.torch_version);
-    if (health.device) parts.push('device: ' + health.device);
-    els.footerRuntime.textContent = parts.length ? parts.join(' · ') : 'Backend: online';
   }
 
   /** Enable/disable Predict and explain why it is disabled. */
@@ -1641,7 +1624,6 @@
       infoTrained: byId('info-trained'),
       infoCheckpoint: byId('info-checkpoint'),
 
-      footerRuntime: byId('footer-runtime'),
       announcer: byId('announcer'),
     });
   }

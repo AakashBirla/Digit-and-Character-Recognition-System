@@ -1,7 +1,7 @@
 # Digit and Character Recognition System
 
 *Developed by **Aakash Birla** (Information Technology, 3rd Year) under the mentorship of
-**Dr. Akhilish Tiwari**, Department of Information Technology, MITS DU, Gwalior.*
+**Dr. Akhilesh Tiwari**, Department of Information Technology, MITS DU, Gwalior.*
 
 An educational, end-to-end web application that recognises handwritten **digits (0–9)** and
 **English letters (A–Z, a–z)** drawn in the browser with a **pen tablet, mouse or touchscreen**.
@@ -52,7 +52,7 @@ the probability of every class, and the exact 28 × 28 image the neural network 
 | Transparency | A **"What the CNN sees"** preview of the preprocessed 28 × 28 input. |
 | Model information | Dataset, number of classes, **measured** official test accuracy (only shown when it has been measured), validation accuracy, architecture, parameter count, inference device. |
 | Status | Backend/model status indicator (online / degraded / offline). If a model is missing, the UI shows the command that trains it. |
-| Design | Clean, responsive interface in a strict three-colour palette – `#2D3436` (charcoal), `#DFE6E9` (light grey) and `#FFFFFF` (white) – with a black drawing area. States are shown with fills, outlines and dashed borders rather than extra colours, and all text meets WCAG AAA contrast. |
+| Design | Calm, responsive mint-and-teal interface: mint page (`#E7F3EE`), one teal accent (`#008178`) for the main action and the selected mode, flat cards tinted by purpose (`#EFF7F2` drawing, `#E2EFF8` prediction, `#F9F4E9` model information) with light tiles (`#F4F8FC`), dark-teal text (`#1C3D3A`), soft green / amber / red status pills, and a near-black drawing area with white strokes. Text meets WCAG AA contrast. |
 | Engineering | Configurable training scripts with early stopping and checkpointing, evaluation script with full metrics and plots, dataset-verification script, 440+ pytest tests that need neither the datasets nor trained models. |
 
 Keyboard shortcuts: <kbd>Enter</kbd> predict · <kbd>Esc</kbd> clear · <kbd>E</kbd> eraser ·
@@ -618,8 +618,8 @@ Project code: see [`LICENSE`](LICENSE).
 
 **Developed by:** Aakash Birla – Information Technology, 3rd Year
 
-**Under the mentorship of:** Dr. Akhilish Tiwari – Department of Information Technology,
+**Under the mentorship of:** Dr. Akhilesh Tiwari – Department of Information Technology,
 MITS DU, Gwalior
 
-The author thanks Dr. Akhilish Tiwari for guidance throughout the project, and the creators of
+The author thanks Dr. Akhilesh Tiwari for guidance throughout the project, and the creators of
 the MNIST and EMNIST datasets and of PyTorch, on which this work builds.
