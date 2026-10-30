@@ -1,0 +1,26 @@
+{
+  "description": "Test glyphs re-drawn as crisp strokes on a 400x400 black canvas at a random size (35%-75% of the canvas) and position, then passed through the app's preprocessing pipeline.",
+  "dataset": "emnist_byclass",
+  "checkpoint": "models/emnist_byclass_cnn.pth",
+  "full_test_split": true,
+  "evaluated_at": "2026-10-30T19:26:50+00:00",
+  "samples": 2000,
+  "accuracy": 0.85,
+  "direct_accuracy_same_samples": 0.8575,
+  "preprocessing_errors": 0,
+  "seed": 0,
+  "seconds": 5.73,
+  "preprocessing": {
+    "mean": 0.1736,
+    "std": 0.3317,
+    "image_size": 28,
+    "target_box": 23,
+    "centering": "bounding_box",
+    "stroke_width": 2.8,
+    "normalize_stroke": true,
+    "ink_threshold": 40,
+    "min_ink_pixels": 20,
+    "min_side": 8,
+    "max_side": 4096
+  }
+}

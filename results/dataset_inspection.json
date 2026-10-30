@@ -1,0 +1,452 @@
+{
+  "generated_at": "2026-10-29T08:14:42+00:00",
+  "torch_version": "2.14.0+cu130",
+  "torchvision_version": "0.29.0+cu130",
+  "data_dir": "data",
+  "datasets": {
+    "mnist": {
+      "key": "mnist",
+      "mode": "digits",
+      "display_name": "MNIST",
+      "num_classes": 10,
+      "transpose_raw": false,
+      "splits": {
+        "train": {
+          "num_samples": 60000,
+          "image_shape": [
+            28,
+            28
+          ],
+          "dtype": "uint8",
+          "pixel_min": 0,
+          "pixel_max": 255,
+          "label_min": 0,
+          "label_max": 9,
+          "classes_present": 10,
+          "class_counts": {
+            "0": 5923,
+            "1": 6742,
+            "2": 5958,
+            "3": 6131,
+            "4": 5842,
+            "5": 5421,
+            "6": 5918,
+            "7": 6265,
+            "8": 5851,
+            "9": 5949
+          },
+          "min_class": {
+            "label": "5",
+            "count": 5421
+          },
+          "max_class": {
+            "label": "1",
+            "count": 6742
+          },
+          "imbalance_ratio": 1.24,
+          "digit_fraction": 1.0,
+          "valid": true
+        },
+        "test": {
+          "num_samples": 10000,
+          "image_shape": [
+            28,
+            28
+          ],
+          "dtype": "uint8",
+          "pixel_min": 0,
+          "pixel_max": 255,
+          "label_min": 0,
+          "label_max": 9,
+          "classes_present": 10,
+          "class_counts": {
+            "0": 980,
+            "1": 1135,
+            "2": 1032,
+            "3": 1010,
+            "4": 982,
+            "5": 892,
+            "6": 958,
+            "7": 1028,
+            "8": 974,
+            "9": 1009
+          },
+          "min_class": {
+            "label": "5",
+            "count": 892
+          },
+          "max_class": {
+            "label": "1",
+            "count": 1135
+          },
+          "imbalance_ratio": 1.27,
+          "digit_fraction": 1.0,
+          "valid": true
+        }
+      },
+      "normalization": {
+        "measured_mean": 0.13066,
+        "measured_std": 0.30811,
+        "spec_mean": 0.1307,
+        "spec_std": 0.3081,
+        "mean_diff": -4e-05,
+        "std_diff": 1e-05,
+        "matches_spec": true
+      },
+      "geometry": {
+        "num_samples": 20000,
+        "seed": 0,
+        "methods": {
+          "longest_side": "max(h, w) of the bounding box of pixels > 0.1",
+          "bbox_centre": "((left + right) / 2, (top + bottom) / 2) in pixel-index coordinates",
+          "centre_of_mass": "intensity-weighted mean of np.mgrid pixel-index coordinates",
+          "stroke_width": "2 * area / perimeter of the pixels > 0.5 mask (area = pixel count, perimeter = sum of cv2.arcLength over RETR_LIST contours)"
+        },
+        "longest_side": {
+          "median": 20.0,
+          "mean": 20.0,
+          "p5": 20.0,
+          "p95": 20.0,
+          "expected": 20,
+          "fraction_equal_expected": 0.9999,
+          "spec_target_box": 20
+        },
+        "bbox_centre": {
+          "x": {
+            "mean": 13.946,
+            "std": 0.995
+          },
+          "y": {
+            "mean": 14.173,
+            "std": 1.343
+          }
+        },
+        "centre_of_mass": {
+          "x": {
+            "mean": 14.01,
+            "std": 0.292
+          },
+          "y": {
+            "mean": 13.994,
+            "std": 0.289
+          }
+        },
+        "stroke_width": {
+          "median": 2.406,
+          "mean": 2.487,
+          "spec": 2.44,
+          "diff_median_minus_spec": -0.034
+        },
+        "spec_centering": "center_of_mass",
+        "centring_target": 14.0,
+        "centring_matches_spec": true,
+        "longest_side_matches_spec": true,
+        "stroke_width_matches_spec": true
+      }
+    },
+    "emnist_byclass": {
+      "key": "emnist_byclass",
+      "mode": "characters",
+      "display_name": "EMNIST ByClass",
+      "num_classes": 62,
+      "transpose_raw": true,
+      "splits": {
+        "train": {
+          "num_samples": 697932,
+          "image_shape": [
+            28,
+            28
+          ],
+          "dtype": "uint8",
+          "pixel_min": 0,
+          "pixel_max": 255,
+          "label_min": 0,
+          "label_max": 61,
+          "classes_present": 62,
+          "class_counts": {
+            "0": 34585,
+            "1": 38374,
+            "2": 34203,
+            "3": 35143,
+            "4": 33535,
+            "5": 31416,
+            "6": 34232,
+            "7": 35754,
+            "8": 33946,
+            "9": 33847,
+            "A": 6407,
+            "B": 3878,
+            "C": 10094,
+            "D": 4562,
+            "E": 4934,
+            "F": 9182,
+            "G": 2517,
+            "H": 3152,
+            "I": 11946,
+            "J": 3762,
+            "K": 2468,
+            "L": 5076,
+            "M": 9002,
+            "N": 8237,
+            "O": 24983,
+            "P": 8347,
+            "Q": 2605,
+            "R": 5073,
+            "S": 20764,
+            "T": 9820,
+            "U": 12602,
+            "V": 4637,
+            "W": 4695,
+            "X": 2771,
+            "Y": 4743,
+            "Z": 2701,
+            "a": 10033,
+            "b": 5159,
+            "c": 2854,
+            "d": 10177,
+            "e": 24631,
+            "f": 2561,
+            "g": 3687,
+            "h": 8738,
+            "i": 2725,
+            "j": 1896,
+            "k": 2491,
+            "l": 15318,
+            "m": 2645,
+            "n": 11418,
+            "o": 2749,
+            "p": 2448,
+            "q": 2994,
+            "r": 14105,
+            "s": 2699,
+            "t": 18262,
+            "u": 2830,
+            "v": 2910,
+            "w": 2697,
+            "x": 2822,
+            "y": 2365,
+            "z": 2725
+          },
+          "min_class": {
+            "label": "j",
+            "count": 1896
+          },
+          "max_class": {
+            "label": "1",
+            "count": 38374
+          },
+          "imbalance_ratio": 20.24,
+          "digit_fraction": 0.4944,
+          "valid": true
+        },
+        "test": {
+          "num_samples": 116323,
+          "image_shape": [
+            28,
+            28
+          ],
+          "dtype": "uint8",
+          "pixel_min": 0,
+          "pixel_max": 255,
+          "label_min": 0,
+          "label_max": 61,
+          "classes_present": 62,
+          "class_counts": {
+            "0": 5778,
+            "1": 6330,
+            "2": 5869,
+            "3": 5969,
+            "4": 5619,
+            "5": 5190,
+            "6": 5705,
+            "7": 6139,
+            "8": 5633,
+            "9": 5686,
+            "A": 1062,
+            "B": 648,
+            "C": 1739,
+            "D": 779,
+            "E": 851,
+            "F": 1440,
+            "G": 447,
+            "H": 521,
+            "I": 2048,
+            "J": 626,
+            "K": 382,
+            "L": 810,
+            "M": 1485,
+            "N": 1351,
+            "O": 4156,
+            "P": 1397,
+            "Q": 413,
+            "R": 809,
+            "S": 3508,
+            "T": 1576,
+            "U": 2002,
+            "V": 796,
+            "W": 806,
+            "X": 432,
+            "Y": 798,
+            "Z": 464,
+            "a": 1644,
+            "b": 853,
+            "c": 432,
+            "d": 1683,
+            "e": 4092,
+            "f": 400,
+            "g": 589,
+            "h": 1479,
+            "i": 427,
+            "j": 317,
+            "k": 466,
+            "l": 2535,
+            "m": 464,
+            "n": 1898,
+            "o": 466,
+            "p": 368,
+            "q": 505,
+            "r": 2320,
+            "s": 437,
+            "t": 2965,
+            "u": 482,
+            "v": 468,
+            "w": 467,
+            "x": 470,
+            "y": 381,
+            "z": 451
+          },
+          "min_class": {
+            "label": "j",
+            "count": 317
+          },
+          "max_class": {
+            "label": "1",
+            "count": 6330
+          },
+          "imbalance_ratio": 19.97,
+          "digit_fraction": 0.4979,
+          "valid": true
+        }
+      },
+      "normalization": {
+        "measured_mean": 0.17359,
+        "measured_std": 0.33165,
+        "spec_mean": 0.1736,
+        "spec_std": 0.3317,
+        "mean_diff": -1e-05,
+        "std_diff": -5e-05,
+        "matches_spec": true
+      },
+      "geometry": {
+        "num_samples": 20000,
+        "seed": 0,
+        "methods": {
+          "longest_side": "max(h, w) of the bounding box of pixels > 0.1",
+          "bbox_centre": "((left + right) / 2, (top + bottom) / 2) in pixel-index coordinates",
+          "centre_of_mass": "intensity-weighted mean of np.mgrid pixel-index coordinates",
+          "stroke_width": "2 * area / perimeter of the pixels > 0.5 mask (area = pixel count, perimeter = sum of cv2.arcLength over RETR_LIST contours)"
+        },
+        "longest_side": {
+          "median": 24.0,
+          "mean": 23.736,
+          "p5": 22.0,
+          "p95": 25.0,
+          "expected": 24,
+          "fraction_equal_expected": 0.7097,
+          "spec_target_box": 23
+        },
+        "bbox_centre": {
+          "x": {
+            "mean": 13.562,
+            "std": 0.272
+          },
+          "y": {
+            "mean": 13.532,
+            "std": 0.198
+          }
+        },
+        "centre_of_mass": {
+          "x": {
+            "mean": 13.39,
+            "std": 1.173
+          },
+          "y": {
+            "mean": 13.537,
+            "std": 1.441
+          }
+        },
+        "stroke_width": {
+          "median": 2.804,
+          "mean": 2.895,
+          "spec": 2.8,
+          "diff_median_minus_spec": 0.004
+        },
+        "spec_centering": "bounding_box",
+        "centring_target": 13.5,
+        "centring_matches_spec": true,
+        "longest_side_matches_spec": true,
+        "stroke_width_matches_spec": true
+      },
+      "load_split_equals_transposed_raw": true
+    }
+  },
+  "mapping": {
+    "mnist": {
+      "matches_torchvision": true,
+      "torchvision_classes": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    "emnist_byclass": {
+      "matches_official": true,
+      "matches_torchvision": true,
+      "mismatches": [],
+      "num_classes": 62,
+      "official_mapping_found": true,
+      "ascii_ranges": {
+        "0-9": "48-57",
+        "10-35": "65-90 (A-Z)",
+        "36-61": "97-122 (a-z)"
+      }
+    }
+  },
+  "artifacts": {
+    "samples_mnist": "results/samples_mnist.png",
+    "samples_emnist_byclass": "results/samples_emnist_byclass.png",
+    "samples_emnist_byclass_raw_untransposed": "results/samples_emnist_byclass_raw_untransposed.png"
+  },
+  "orientation_check": {
+    "method": "nearest MNIST class-mean template (cosine similarity) on EMNIST digit samples",
+    "num_samples": 5000,
+    "accuracy_by_orientation": {
+      "upright (as loaded)": 0.5364,
+      "transposed (raw torchvision tensor)": 0.1782,
+      "horizontal flip": 0.2876,
+      "vertical flip": 0.2104,
+      "rotated 90 deg clockwise": 0.1348,
+      "rotated 90 deg counter-clockwise": 0.1268,
+      "rotated 180 deg": 0.2496
+    },
+    "best_orientation": "upright (as loaded)",
+    "upright_is_best": true
+  },
+  "critical_checks": {
+    "mnist splits valid": true,
+    "emnist splits valid": true,
+    "mnist labels match torchvision": true,
+    "emnist labels match torchvision": true,
+    "emnist labels match official mapping": true,
+    "emnist load_split == transpose(raw)": true,
+    "emnist upright orientation best": true
+  },
+  "all_critical_checks_passed": true
+}

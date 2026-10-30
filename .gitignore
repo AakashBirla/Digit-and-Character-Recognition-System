@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Distribution
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Test / tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Data (large files, downloaded automatically by torchvision - see data/README.md)
+data/MNIST/
+data/EMNIST/
+
+# Model checkpoints (large binary files - re-create with train_mnist.py / train_emnist.py)
+models/*.pth
+models/*.pt
+checkpoints/*.pth
+checkpoints/*.pt
+# Left over by an interrupted atomic checkpoint write
+*.tmp
+
+# Debug output (preprocessed inputs saved by `python app.py --debug-preprocessing`)
+results/debug/
+
+# Keep placeholder files so otherwise-empty directories stay in the repository
+!.gitkeep
+
+# Secrets
+.env
+*.key
+*.pem
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Results (metrics, plots, sample grids) are small and tracked on purpose.

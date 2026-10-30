@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0e16">
+  <meta name="description" content="Draw a digit or character and let a PyTorch CNN trained on MNIST or EMNIST ByClass recognize it.">
+  <title>Handwriting Recognizer</title>
+  <!-- Inline SVG favicon: no extra request, no 404 for /favicon.ico. -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233a5fd9'/%3E%3Cstop offset='1' stop-color='%236a4bd6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M8.5 21.5c2.6-7.4 5.2-11.5 6.8-11.5 1.5 0 1.3 4.1 0 7.7-1.2 3.4-.9 5 1.4 5 2.4 0 4.2-3.8 5.3-6.6' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- SVG icon sprite (referenced with <use href="#icon-…">). -->
+  <svg class="icon-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="icon-eraser" viewBox="0 0 24 24"><path d="m7 21-4.3-4.3a2.4 2.4 0 0 1 0-3.4l9.6-9.6a2.4 2.4 0 0 1 3.4 0l5.6 5.6a2.4 2.4 0 0 1 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></symbol>
+    <symbol id="icon-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+    <symbol id="icon-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="m19 6-1 14H6L5 6"/><path d="M10 11v5"/><path d="M14 11v5"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></symbol>
+    <symbol id="icon-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></symbol>
+    <symbol id="icon-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  </svg>
+
+  <header class="app-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="brand-gradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#3a5fd9"/>
+              <stop offset="1" stop-color="#6a4bd6"/>
+            </linearGradient>
+          </defs>
+          <rect width="32" height="32" rx="8" fill="url(#brand-gradient)"/>
+          <path d="M8.5 21.5c2.6-7.4 5.2-11.5 6.8-11.5 1.5 0 1.3 4.1 0 7.7-1.2 3.4-.9 5 1.4 5 2.4 0 4.2-3.8 5.3-6.6" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="brand-text">
+          <h1 class="brand-title">Handwriting Recognizer</h1>
+          <p class="brand-subtitle">Powered by PyTorch</p>
+        </div>
+      </div>
+
+      <div class="header-meta">
+        <span class="model-chip" id="model-chip" data-status="unknown" title="Selected model">
+          <span class="chip-dot" aria-hidden="true"></span>
+          <span class="model-chip-label">Model</span>
+          <span class="model-chip-name" id="model-chip-name">MNIST CNN</span>
+        </span>
+        <span class="status-pill" id="status-pill" data-state="checking" title="Backend status (checked every 15 seconds)">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="visually-hidden">Backend status:</span>
+          <span id="status-text">Checking…</span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="container main" tabindex="-1">
+    <section class="mode-section" aria-labelledby="mode-heading">
+      <h2 id="mode-heading" class="visually-hidden">Recognition mode</h2>
+      <div class="mode-switch" id="mode-switch" role="radiogroup" aria-labelledby="mode-heading">
+        <button type="button" class="mode-option" role="radio" data-mode="digits" aria-checked="true" tabindex="0">
+          <span class="mode-option-title">Digit Recognition <span class="mode-option-dataset">(MNIST)</span></span>
+          <span class="mode-option-sub">0–9 · 10 classes</span>
+          <span class="mode-badge" data-badge-for="digits" hidden></span>
+        </button>
+        <button type="button" class="mode-option" role="radio" data-mode="characters" aria-checked="false" tabindex="-1">
+          <span class="mode-option-title">Character Recognition <span class="mode-option-dataset">(EMNIST)</span></span>
+          <span class="mode-option-sub">0–9, A–Z, a–z · 62 classes</span>
+          <span class="mode-badge" data-badge-for="characters" hidden></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Backend / model availability notice (offline, missing checkpoint, load error). -->
+    <div class="notice" id="notice" data-tone="warning" role="status" aria-live="polite" hidden>
+      <svg class="icon notice-icon" aria-hidden="true" focusable="false"><use href="#icon-alert"/></svg>
+      <div class="notice-body">
+        <p class="notice-title" id="notice-title"></p>
+        <p class="notice-text" id="notice-text"></p>
+        <div class="command" id="notice-command" hidden>
+          <span class="command-prompt" aria-hidden="true">$</span>
+          <code class="command-text" id="notice-command-text"></code>
+          <button type="button" class="btn btn-ghost btn-sm" id="copy-command" aria-label="Copy command to clipboard">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-copy"/></svg>
+            <span id="copy-command-label">Copy</span>
+          </button>
+        </div>
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm notice-action" id="retry-health">
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-refresh"/></svg>
+        <span>Re-check</span>
+      </button>
+    </div>
+
+    <div class="layout">
+      <!-- ============================ DRAWING PANEL ============================ -->
+      <section class="card card-draw" aria-labelledby="draw-heading">
+        <div class="card-header">
+          <h2 class="card-title" id="draw-heading">Draw</h2>
+          <p class="card-hint" id="draw-prompt">Draw a single digit (0–9). Large and centered works best.</p>
+        </div>
+
+        <div class="canvas-wrap" id="canvas-wrap">
+          <canvas id="draw-canvas" class="draw-canvas" width="400" height="400" role="img"
+                  aria-label="Drawing canvas. Draw one digit or character with a mouse, finger or pen. Press Enter to predict, Escape to clear."></canvas>
+          <p class="canvas-placeholder" id="canvas-placeholder" aria-hidden="true">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-pen"/></svg>
+            Draw here
+          </p>
+          <div class="brush-cursor" id="brush-cursor" aria-hidden="true"></div>
+        </div>
+
+        <div class="toolbar">
+          <div class="brush-control">
+            <label for="brush-size" class="brush-label">Brush</label>
+            <input type="range" id="brush-size" class="range" min="4" max="48" step="1" value="22"
+                   aria-describedby="brush-size-value">
+            <output id="brush-size-value" class="brush-value" for="brush-size">22 px</output>
+          </div>
+          <div class="tool-buttons">
+            <button type="button" class="btn btn-tool" id="eraser-btn" aria-pressed="false" title="Eraser (E)">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-eraser"/></svg>
+              <span>Eraser</span>
+            </button>
+            <button type="button" class="btn btn-tool" id="undo-btn" title="Undo (Ctrl+Z)" disabled>
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-undo"/></svg>
+              <span>Undo</span>
+            </button>
+            <button type="button" class="btn btn-tool" id="clear-btn" title="Clear (Esc or Delete)">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-trash"/></svg>
+              <span>Clear</span>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block" id="predict-btn" aria-describedby="predict-hint">
+          <span class="spinner" aria-hidden="true"></span>
+          <span id="predict-label">Predict</span>
+          <svg class="icon predict-arrow" aria-hidden="true" focusable="false"><use href="#icon-arrow"/></svg>
+        </button>
+        <p class="predict-hint" id="predict-hint" hidden></p>
+
+        <p class="hint">
+          <strong>Pen tablets work great:</strong> pressure changes the stroke width, the pen's eraser end erases,
+          and a resting palm is ignored while the pen is in use.
+        </p>
+        <ul class="shortcuts" aria-label="Keyboard shortcuts">
+          <li><kbd>Enter</kbd> predict</li>
+          <li><kbd>Esc</kbd> clear</li>
+          <li><kbd>E</kbd> eraser</li>
+          <li><kbd>[</kbd> <kbd>]</kbd> brush size</li>
+          <li><kbd>Ctrl</kbd>+<kbd>Z</kbd> undo</li>
+        </ul>
+      </section>
+
+      <!-- ============================ RESULT PANEL ============================ -->
+      <section class="card card-result" id="result-card" aria-labelledby="result-heading" aria-busy="false">
+        <div class="card-header">
+          <h2 class="card-title" id="result-heading">Prediction</h2>
+          <p class="result-meta" id="result-meta" hidden></p>
+        </div>
+
+        <div class="result-state result-empty" id="result-empty">
+          <div class="empty-art" aria-hidden="true">
+            <span class="empty-glyph" id="empty-glyph">?</span>
+          </div>
+          <p class="empty-title">No prediction yet</p>
+          <p class="empty-text" id="empty-text">Draw a digit from 0 to 9 on the canvas, then press <strong>Predict</strong>.</p>
+        </div>
+
+        <div class="result-state result-loading" id="result-loading" hidden>
+          <span class="spinner spinner-lg" aria-hidden="true"></span>
+          <p>Recognizing your drawing…</p>
+        </div>
+
+        <div class="result-state result-message" id="result-message" data-tone="danger" hidden>
+          <svg class="icon message-icon" aria-hidden="true" focusable="false"><use href="#icon-alert"/></svg>
+          <p class="message-title" id="message-title"></p>
+          <p class="message-text" id="message-text"></p>
+          <div class="command" id="message-command" hidden>
+            <span class="command-prompt" aria-hidden="true">$</span>
+            <code class="command-text" id="message-command-text"></code>
+          </div>
+        </div>
+
+        <div class="result-content" id="result-content" hidden>
+          <div class="result-hero">
+            <div class="glyph-tile" id="glyph-tile">
+              <span class="glyph" id="result-glyph" aria-hidden="true"></span>
+            </div>
+
+            <div class="result-summary">
+              <p class="result-category" id="result-category"></p>
+              <p class="result-class" id="result-class"></p>
+              <div class="confidence">
+                <p class="confidence-row">
+                  <span class="confidence-value" id="confidence-value"></span>
+                  <span class="confidence-level" id="confidence-level" data-level="high"></span>
+                </p>
+                <div class="meter" aria-hidden="true"><div class="meter-fill" id="confidence-fill"></div></div>
+                <p class="confidence-caption">Model confidence (softmax probability) — not a guarantee of correctness</p>
+              </div>
+            </div>
+
+            <figure class="preview" id="preview">
+              <div class="preview-frame">
+                <img id="preview-img" class="preview-img" width="140" height="140"
+                     alt="The 28 by 28 pixel image the network received after preprocessing">
+              </div>
+              <figcaption>
+                <span class="preview-title">What the CNN sees</span>
+                <span class="preview-sub">28 × 28 px after cropping, scaling &amp; centering</span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <p class="ambiguity-note" id="ambiguity-note" hidden>
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-info"/></svg>
+            <span id="ambiguity-text"></span>
+          </p>
+
+          <div class="result-section">
+            <h3 class="section-title">Top 5 predictions</h3>
+            <ol class="topk-list" id="topk-list"></ol>
+          </div>
+
+          <div class="result-section">
+            <div class="section-head">
+              <h3 class="section-title" id="probs-heading">All class probabilities</h3>
+              <div class="list-controls" id="list-controls" hidden>
+                <div class="search-field">
+                  <svg class="icon" aria-hidden="true" focusable="false"><use href="#icon-search"/></svg>
+                  <input type="search" id="class-search" class="search-input" placeholder="Search label"
+                         aria-label="Filter classes by label" autocomplete="off" autocapitalize="off" spellcheck="false">
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="top-only" class="switch-input">
+                  <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+                  <span class="switch-label">Top 5 only</span>
+                </label>
+              </div>
+            </div>
+            <div class="prob-scroll" id="prob-scroll">
+              <ul class="prob-list" id="prob-list" aria-labelledby="probs-heading"></ul>
+              <p class="prob-empty" id="prob-empty" hidden></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ MODEL INFORMATION ============================ -->
+      <section class="card card-info" aria-labelledby="info-heading">
+        <div class="card-header">
+          <h2 class="card-title" id="info-heading">Model information</h2>
+          <span class="status-badge" id="info-status" data-status="unknown">Unknown</span>
+        </div>
+        <dl class="info-grid">
+          <div class="info-item">
+            <dt>Dataset</dt>
+            <dd id="info-dataset">MNIST</dd>
+          </div>
+          <div class="info-item">
+            <dt>Classes</dt>
+            <dd id="info-classes">10</dd>
+          </div>
+          <div class="info-item info-wide">
+            <dt>Test accuracy</dt>
+            <dd id="info-test-acc">—</dd>
+          </div>
+          <div class="info-item">
+            <dt>Validation accuracy</dt>
+            <dd id="info-val-acc">—</dd>
+          </div>
+          <div class="info-item">
+            <dt>Parameters</dt>
+            <dd id="info-params">—</dd>
+          </div>
+          <div class="info-item info-wide">
+            <dt>Architecture</dt>
+            <dd id="info-arch" class="mono-wrap">—</dd>
+          </div>
+          <div class="info-item">
+            <dt>Inference device</dt>
+            <dd id="info-device">—</dd>
+          </div>
+          <div class="info-item">
+            <dt>Trained on</dt>
+            <dd id="info-trained">—</dd>
+          </div>
+          <div class="info-item info-wide">
+            <dt>Checkpoint</dt>
+            <dd id="info-checkpoint" class="mono-wrap">—</dd>
+          </div>
+        </dl>
+      </section>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container footer-inner">
+      <p>Runs locally: canvas → preprocessing (crop, scale, center) → CNN → softmax.</p>
+      <p id="footer-runtime">Backend: checking…</p>
+    </div>
+  </footer>
+
+  <!-- Screen-reader announcements (predictions, status changes). -->
+  <div class="visually-hidden" id="announcer" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

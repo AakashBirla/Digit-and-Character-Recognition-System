@@ -1,0 +1,161 @@
+{
+  "dataset": "emnist_byclass",
+  "display_name": "EMNIST ByClass",
+  "device": "cuda (NVIDIA GeForce RTX 3050 Laptop GPU)",
+  "best_epoch": 13,
+  "best_val_accuracy": 0.8578654019744101,
+  "epochs_completed": 15,
+  "stopped_early": false,
+  "epochs": [
+    {
+      "epoch": 1,
+      "train_loss": 0.7149578074755183,
+      "train_acc": 0.773752306416255,
+      "val_loss": 0.45101642165406,
+      "val_acc": 0.8369177424670096,
+      "lr": 0.001,
+      "seconds": 20.22,
+      "improved": true
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.5298551100518506,
+      "train_acc": 0.8196609349204556,
+      "val_loss": 0.41419227152587557,
+      "val_acc": 0.8493975040476839,
+      "lr": 0.001,
+      "seconds": 19.77,
+      "improved": true
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.4960535841152518,
+      "train_acc": 0.8294740495336224,
+      "val_loss": 0.4188518244926606,
+      "val_acc": 0.8469760577708366,
+      "lr": 0.001,
+      "seconds": 19.13,
+      "improved": false
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.47637737494742566,
+      "train_acc": 0.8347165197512015,
+      "val_loss": 0.40626821303773103,
+      "val_acc": 0.8501139082716032,
+      "lr": 0.001,
+      "seconds": 19.91,
+      "improved": true
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.46375376370891136,
+      "train_acc": 0.8388016028299469,
+      "val_loss": 0.3932219516853852,
+      "val_acc": 0.8552863467683005,
+      "lr": 0.001,
+      "seconds": 19.1,
+      "improved": true
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.45478186605653753,
+      "train_acc": 0.8406515118469001,
+      "val_loss": 0.41107929206853705,
+      "val_acc": 0.8510595618471767,
+      "lr": 0.001,
+      "seconds": 19.08,
+      "improved": false
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.44842285293361966,
+      "train_acc": 0.842824597740309,
+      "val_loss": 0.4069990314851869,
+      "val_acc": 0.8499706274268193,
+      "lr": 0.001,
+      "seconds": 19.06,
+      "improved": false
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.42966244066328196,
+      "train_acc": 0.8483743247911688,
+      "val_loss": 0.3909210255766797,
+      "val_acc": 0.855229034430387,
+      "lr": 0.0005,
+      "seconds": 18.99,
+      "improved": false
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.42711183717787643,
+      "train_acc": 0.849198983027642,
+      "val_loss": 0.389434335111552,
+      "val_acc": 0.8555155961199548,
+      "lr": 0.0005,
+      "seconds": 18.96,
+      "improved": true
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.4232699118247134,
+      "train_acc": 0.8501971697347244,
+      "val_loss": 0.3929252748062848,
+      "val_acc": 0.8557018612181737,
+      "lr": 0.0005,
+      "seconds": 18.96,
+      "improved": true
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.4210520587305086,
+      "train_acc": 0.8507511872372198,
+      "val_loss": 0.3908116454374788,
+      "val_acc": 0.8567764675540527,
+      "lr": 0.0005,
+      "seconds": 18.98,
+      "improved": true
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.41978340461143254,
+      "train_acc": 0.851177844394314,
+      "val_loss": 0.40273373459206113,
+      "val_acc": 0.8525783388018856,
+      "lr": 0.0005,
+      "seconds": 18.98,
+      "improved": false
+    },
+    {
+      "epoch": 13,
+      "train_loss": 0.4170785601450512,
+      "train_acc": 0.8519276784278639,
+      "val_loss": 0.38419216975153175,
+      "val_acc": 0.8578654019744101,
+      "lr": 0.0005,
+      "seconds": 18.98,
+      "improved": true
+    },
+    {
+      "epoch": 14,
+      "train_loss": 0.41567253970228984,
+      "train_acc": 0.8518082781040502,
+      "val_loss": 0.39875129228926587,
+      "val_acc": 0.8553006748527789,
+      "lr": 0.0005,
+      "seconds": 19.01,
+      "improved": false
+    },
+    {
+      "epoch": 15,
+      "train_loss": 0.4142862370424047,
+      "train_acc": 0.8522508553043195,
+      "val_loss": 0.3899050980360979,
+      "val_acc": 0.8570057169057069,
+      "lr": 0.0005,
+      "seconds": 18.95,
+      "improved": false
+    }
+  ]
+}

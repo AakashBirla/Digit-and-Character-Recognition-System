@@ -1,0 +1,26 @@
+{
+  "description": "Test glyphs re-drawn as crisp strokes on a 400x400 black canvas at a random size (35%-75% of the canvas) and position, then passed through the app's preprocessing pipeline.",
+  "dataset": "mnist",
+  "checkpoint": "models/mnist_cnn.pth",
+  "full_test_split": true,
+  "evaluated_at": "2026-10-30T19:26:42+00:00",
+  "samples": 2000,
+  "accuracy": 0.993,
+  "direct_accuracy_same_samples": 0.9955,
+  "preprocessing_errors": 0,
+  "seed": 0,
+  "seconds": 5.69,
+  "preprocessing": {
+    "mean": 0.1307,
+    "std": 0.3081,
+    "image_size": 28,
+    "target_box": 20,
+    "centering": "center_of_mass",
+    "stroke_width": 2.44,
+    "normalize_stroke": true,
+    "ink_threshold": 40,
+    "min_ink_pixels": 20,
+    "min_side": 8,
+    "max_side": 4096
+  }
+}

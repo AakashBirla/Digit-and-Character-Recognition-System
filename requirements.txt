@@ -1,0 +1,20 @@
+# Handwritten digit & character recognition - Python dependencies (PyTorch only).
+#
+# GPU users: install the CUDA build of torch + torchvision FIRST, using the command generated at
+#   https://pytorch.org/get-started/locally/
+# for example (pick the CUDA version that matches your NVIDIA driver):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
+# then run `pip install -r requirements.txt`; pip keeps the CUDA wheels that are already installed.
+# Default PyPI wheels may be CPU-only on some platforms (e.g. Windows). Everything also runs on CPU.
+
+torch>=2.2
+torchvision>=0.17
+numpy>=1.26
+Pillow>=10.0
+opencv-python-headless>=4.8
+matplotlib>=3.8
+scikit-learn>=1.4
+Flask>=3.0
+
+# Testing
+pytest>=8.0
