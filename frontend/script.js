@@ -1,5 +1,5 @@
 /**
- * Handwriting Recognizer — frontend controller (vanilla JS, no dependencies).
+ * Digit and Character Recognition System — frontend controller (vanilla JS, no dependencies).
  *
  * Responsibilities
  *  - Drawing: a fixed 400×400 logical canvas rendered at devicePixelRatio for crisp strokes.
