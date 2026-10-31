@@ -37,7 +37,7 @@ the probability of every class, and the exact 28 × 28 image the neural network 
 16. [Troubleshooting](#troubleshooting)
 17. [Known limitations](#known-limitations)
 18. [Dataset attribution and licensing](#dataset-attribution-and-licensing)
-19. [Author and acknowledgements](#author-and-acknowledgements)
+19. [Team and acknowledgements](#team-and-acknowledgements)
 
 ---
 
@@ -614,12 +614,15 @@ Project code: see [`LICENSE`](LICENSE).
 
 ---
 
-## Author and acknowledgements
+## Team and acknowledgements
 
-**Developed by:** Aakash Birla – Information Technology, 3rd Year
+**Developed by:**
+
+* Aakash Birla – Information Technology, 3rd Year
+* Avadhesh Ransore – Information Technology, 3rd Year
 
 **Under the mentorship of:** Dr. Akhilesh Tiwari – Department of Information Technology,
 MITS DU, Gwalior
 
-The author thanks Dr. Akhilesh Tiwari for guidance throughout the project, and the creators of
+The team thanks Dr. Akhilesh Tiwari for guidance throughout the project, and the creators of
 the MNIST and EMNIST datasets and of PyTorch, on which this work builds.

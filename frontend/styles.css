@@ -1003,7 +1003,7 @@ kbd {
   text-align: center;
 }
 .footer-credit {
-  max-width: 70ch;
+  max-width: 92ch;
   color: var(--text-muted);
   font-size: 0.88rem;
   line-height: 1.7;
