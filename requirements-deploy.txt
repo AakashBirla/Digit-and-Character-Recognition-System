@@ -1,0 +1,8 @@
+# Run-time dependencies for deploying the web app (Docker / Hugging Face Spaces).
+# PyTorch itself is installed separately from the CPU-only index (see Dockerfile), which keeps the
+# image small; torchvision, scikit-learn, matplotlib and pytest are only needed for training and testing.
+numpy>=1.26
+Pillow>=10.0
+opencv-python-headless>=4.8
+Flask>=3.0
+gunicorn>=22.0

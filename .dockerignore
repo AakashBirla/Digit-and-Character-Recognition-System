@@ -1,0 +1,15 @@
+# Only app.py, src/, frontend/, models/ and the requirements are needed in the image.
+.git
+.venv
+venv
+__pycache__
+*.pyc
+data
+results
+checkpoints
+notebooks
+tests
+Milestones
+*.png
+test_*.py
+.pytest_cache

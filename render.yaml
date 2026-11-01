@@ -1,0 +1,10 @@
+# Render Blueprint: in the Render dashboard choose New > Blueprint and select this repository.
+# The free plan sleeps after 15 minutes without traffic; the first request afterwards takes about a minute.
+services:
+  - type: web
+    name: digit-character-recognition
+    runtime: docker
+    plan: free
+    region: singapore
+    healthCheckPath: /api/health
+    autoDeploy: true
