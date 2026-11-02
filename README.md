@@ -8,6 +8,9 @@ An educational, end-to-end web application that recognises handwritten **digits 
 Draw a character, press **Predict**, and the page shows the model's prediction, its confidence,
 the probability of every class, and the exact 28 × 28 image the neural network received.
 
+**Live demo: <https://digit-character-recognition.onrender.com>** (hosted on Render's free plan: after
+15 minutes without visitors the server sleeps, and the first request then takes about a minute).
+
 * **Deep learning:** PyTorch only (no TensorFlow / Keras), trained on MNIST and EMNIST ByClass.
 * **Backend:** Flask REST API (`/api/health`, `/api/predict`) with models loaded once at startup.
 * **Frontend:** plain HTML5 + CSS3 + JavaScript (Canvas API, Pointer Events, Fetch API).
@@ -29,15 +32,16 @@ the probability of every class, and the exact 28 × 28 image the neural network 
 8. [Evaluation and results](#evaluation-and-results)
 9. [Image preprocessing](#image-preprocessing)
 10. [Running the web application](#running-the-web-application-application-execution)
-11. [Pen tablet (pentab) support](#pen-tablet-pentab-support)
-12. [REST API](#rest-api)
-13. [Testing](#testing)
-14. [GPU vs CPU](#gpu-vs-cpu)
-15. [Project structure](#project-structure)
-16. [Troubleshooting](#troubleshooting)
-17. [Known limitations](#known-limitations)
-18. [Dataset attribution and licensing](#dataset-attribution-and-licensing)
-19. [Team and acknowledgements](#team-and-acknowledgements)
+11. [Deployment (Docker and Render)](#deployment-docker-and-render)
+12. [Pen tablet (pentab) support](#pen-tablet-pentab-support)
+13. [REST API](#rest-api)
+14. [Testing](#testing)
+15. [GPU vs CPU](#gpu-vs-cpu)
+16. [Project structure](#project-structure)
+17. [Troubleshooting](#troubleshooting)
+18. [Known limitations](#known-limitations)
+19. [Dataset attribution and licensing](#dataset-attribution-and-licensing)
+20. [Team and acknowledgements](#team-and-acknowledgements)
 
 ---
 
@@ -366,7 +370,36 @@ python app.py --host 0.0.0.0                   # reachable from other devices on
 Both checkpoints are loaded **once at startup**. If one is missing or broken the app still starts:
 `/api/health` reports `degraded`, that mode returns HTTP 503 with the command that trains it, and
 the UI disables Predict for that mode. `app.py` uses Flask's development server, which is fine
-locally; for a public deployment run `create_app()` under a production WSGI server.
+locally; for a public deployment run `create_app()` under a production WSGI server (see
+[Deployment](#deployment-docker-and-render)).
+
+---
+
+## Deployment (Docker and Render)
+
+The live demo runs the [`Dockerfile`](Dockerfile) on [Render](https://render.com)'s free plan.
+The image contains only what the app needs at run time:
+
+* **CPU-only PyTorch** (about 0.8 GB installed instead of several GB for the CUDA build) plus the
+  packages in [`requirements-deploy.txt`](requirements-deploy.txt); torchvision, scikit-learn,
+  matplotlib and pytest are only used for training and testing.
+* `app.py`, `src/`, `frontend/` and the two checkpoints in `models/`; [`.dockerignore`](.dockerignore)
+  keeps the datasets, results and reports out.
+* **gunicorn** serves `create_app()` with one worker (one copy of the models in memory) and four
+  threads, listening on `$PORT` when the host sets it (default 7860). One math thread
+  (`OMP_NUM_THREADS=1`) suits the small CPU share of free plans. The app uses about 310 MB of RAM.
+
+**Deploy your own copy on Render:** in the Render dashboard choose **New → Blueprint** and select
+this repository. [`render.yaml`](render.yaml) creates a free web service (Docker, Singapore region,
+health check on `/api/health`) that redeploys on every push to `main`. The free plan sleeps after
+15 minutes without traffic and needs about a minute to wake up.
+
+**Run the same image locally** (any Docker host):
+
+```bash
+docker build -t digit-recognition .
+docker run --rm -p 7860:7860 digit-recognition   # http://127.0.0.1:7860
+```
 
 ---
 
@@ -536,6 +569,9 @@ skipped without a GPU.
 ├── evaluate.py            # evaluate checkpoints on the official test splits
 ├── inspect_datasets.py    # verify orientation, class mapping, statistics; save sample grids
 ├── requirements.txt
+├── requirements-deploy.txt  # run-time packages for the Docker image
+├── Dockerfile             # CPU-only image served by gunicorn (see Deployment)
+├── render.yaml            # Render Blueprint for the live demo
 ├── setup.cfg              # pytest configuration
 ├── src/
 │   ├── config.py          # paths + DatasetSpec (MNIST / EMNIST ByClass conventions)
@@ -592,7 +628,10 @@ skipped without a GPU.
 * **Confidence is not calibrated certainty.** Softmax probabilities of CNNs are often
   over-confident, especially on inputs unlike the training data (e.g. a scribble still gets a
   prediction).
-* **Development server.** `python app.py` uses Flask's built-in server, intended for local use.
+* **Development server.** `python app.py` uses Flask's built-in server, intended for local use; the
+  Docker image uses gunicorn instead.
+* **Free hosting.** The live demo sleeps after 15 minutes without visitors; the first request after
+  that takes about a minute.
 
 ---
 
